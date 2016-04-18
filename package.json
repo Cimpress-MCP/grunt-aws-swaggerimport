@@ -1,0 +1,35 @@
+{
+  "name": "grunt-aws-apigateway-swagger",
+  "version": "0.0.1",
+  "description": "Grunt plugin to configure AWS API Gateway via a Swagger config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simplemerchant/grunt-aws-apigateway-swagger.git"
+  },
+  "scripts": {
+    "jshint": "./node_modules/.bin/jscs ./tasks",
+    "jscs": "./node_modules/.bin/jshint ./tasks --reporter=./node_modules/jshint-full-path/index.js",
+    "test": "npm run-script jscs && npm run-script jshint"
+  },
+  "keywords": [
+    "gruntplugin",
+    "grunt",
+    "swagger",
+    "apigateway",
+    "aws",
+    "api"
+  ],
+  "author": "Simple Merchant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simplemerchant/grunt-aws-apigateway-swagger/issues"
+  },
+  "homepage": "https://github.com/simplemerchant/grunt-aws-apigateway-swagger#readme",
+  "devDependencies": {
+    "jscs": "^3.0.3",
+    "jshint-full-path": "^1.1.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.3.3"
+  }
+}
