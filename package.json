@@ -1,35 +1,37 @@
 {
-  "name": "grunt-aws-apigateway-swagger",
+  "name": "grunt-aws-swaggerimport",
   "version": "0.0.1",
   "description": "Grunt plugin to configure AWS API Gateway via a Swagger config",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/simplemerchant/grunt-aws-apigateway-swagger.git"
-  },
-  "scripts": {
-    "jshint": "./node_modules/.bin/jscs ./tasks",
-    "jscs": "./node_modules/.bin/jshint ./tasks --reporter=./node_modules/jshint-full-path/index.js",
-    "test": "npm run-script jscs && npm run-script jshint"
+  "homepage": "https://github.com/simplemerchant/grunt-aws-swaggerimport#readme",
+  "repository": "git+https://github.com/simplemerchant/grunt-aws-swaggerimport.git",
+  "author": {
+    "name": "Simple Merchant",
+    "email": "hello@simple-merchant.com",
+    "url": "http://www.simple-merchant.com"
   },
   "keywords": [
     "gruntplugin",
-    "grunt",
     "swagger",
     "apigateway",
     "aws",
-    "api"
+    "api",
+    "gateway",
+    "import"
   ],
-  "author": "Simple Merchant",
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/simplemerchant/grunt-aws-apigateway-swagger/issues"
-  },
-  "homepage": "https://github.com/simplemerchant/grunt-aws-apigateway-swagger#readme",
   "devDependencies": {
-    "jscs": "^3.0.3",
-    "jshint-full-path": "^1.1.1"
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt": "~0.4.2",
+    "jshint-stylish": "~0.1.5",
+    "load-grunt-tasks": "~0.3.0"
   },
-  "dependencies": {
-    "aws-sdk": "^2.3.3"
+  "scripts": {
+    "test": "grunt test"
   }
 }

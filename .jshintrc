@@ -20,7 +20,6 @@
   "maxcomplexity": 6,
   "maxdepth": 4,
   "maxstatements": 25,
-  "mocha": true,
   "newcap": true,
   "node": true,
   "noempty": false,
