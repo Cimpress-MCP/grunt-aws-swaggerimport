@@ -1,6 +1,9 @@
 # grunt-aws-swaggerimport
 
-> Grunt plugin to configure AWS API Gateway via a Swagger config
+> Grunt plugin to configure AWS API Gateway via a Swagger config and configure
+> lambda permissions for API gateway.
+
+#### Originally cloned from: [grunt-aws-apigateway](https://github.com/spreaker/grunt-aws-apigateway)
 
 ## Getting Started
 This plugin requires Grunt.
@@ -26,7 +29,9 @@ In your project's Gruntfile, add a section named `import_swagger` to the data ob
 grunt.initConfig({
   import_swagger: {
     options: {
-      // Task-specific options go here.
+      accessKeyId: 'your-aws-access-key-id',
+      secretAccessKey: 'your-aws-secret-access-key',
+      region: 'your-aws-region', // Default: us-east-1
     },
     your_target: {
       // Target-specific file lists and/or options go here.

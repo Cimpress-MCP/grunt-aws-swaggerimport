@@ -8,6 +8,8 @@
 
 'use strict';
 
+require('dotenv').load();
+
 module.exports = function (grunt) {
   // load all npm grunt tasks
   require('load-grunt-tasks')(grunt);
@@ -33,24 +35,17 @@ module.exports = function (grunt) {
 
     // Configuration to be run (and then tested).
     import_swagger: {
-      default_options: {
-        options: {},
-        files: {
-          'tmp/default_options': ['test/fixtures/testing',
-            'test/fixtures/123'
-          ]
-        }
+      options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
       },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
+      default: {
+        restApiId: 'xxx',
+        deployment: {
+          stageName: 'test',
         },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing',
-            'test/fixtures/123'
-          ]
-        }
+        swagger_config: {}
       }
     },
 
