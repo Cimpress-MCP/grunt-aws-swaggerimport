@@ -38,14 +38,21 @@ module.exports = function (grunt) {
       options: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION,
+        region: process.env.AWS_REGION
       },
       default: {
-        restApiId: 'xxx',
+        update: {
+          restApiId: process.env.DEPLOY_API_ID,
+          mode: 'overwrite',
+        },
         deployment: {
           stageName: 'test',
+          cacheClusterEnabled: true,
+          cacheClusterSize: '0.5',
+          description: 'My deployment ' + Date.now(),
+          stageDescription: 'My awesome stage'
         },
-        swagger_config: {}
+        swagger_config: 'test-api.json'
       }
     },
 

@@ -25,7 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^2.0.0",
-    "grunt": "~1.0.1 ",
+    "grunt": "^1.0.1 ",
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-jshint": "~1.0.0",
     "grunt-contrib-nodeunit": "~1.0.0",
@@ -34,5 +34,10 @@
   },
   "scripts": {
     "test": "grunt test"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "aws-sdk": "^2.3.6",
+    "lodash": "^4.11.1"
   }
 }
