@@ -6,7 +6,7 @@
   "repository": "git+https://github.com/simplemerchant/grunt-aws-swaggerimport.git",
   "author": {
     "name": "Simple Merchant",
-    "email": "hello@simple-merchant.com",
+    "email": "opensource@simple-merchant.com",
     "url": "http://www.simple-merchant.com"
   },
   "keywords": [
