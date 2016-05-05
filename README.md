@@ -5,6 +5,13 @@
 
 #### Originally seeded from: [grunt-aws-apigateway](https://github.com/spreaker/grunt-aws-apigateway)
 
+## Features
+
+  - Imports a [Swagger](http://swagger.io/) config into an AWS API Gateway
+  - Can either load as a newly created API, or update an existing one.
+  - Can either be loaded from a file, or imported inline from a Javascript object
+  - Can deploy the API to a stage, including setting stage variables.
+
 ## Getting Started
 This plugin requires Grunt.
 
