@@ -50,9 +50,12 @@ module.exports = function (grunt) {
           cacheClusterEnabled: true,
           cacheClusterSize: '0.5',
           description: 'My deployment ' + Date.now(),
-          stageDescription: 'My awesome stage'
+          stageDescription: 'My awesome stage',
+          variables: {
+            lambdaStage: 'some-test-stage',
+          }
         },
-        swagger_config: 'test-api.json'
+        swagger_config: 'apis/test-api.json'
       }
     },
 

@@ -3,7 +3,7 @@
 > Grunt plugin to configure AWS API Gateway via a Swagger config and configure
 > lambda permissions for API gateway.
 
-#### Originally cloned from: [grunt-aws-apigateway](https://github.com/spreaker/grunt-aws-apigateway)
+#### Originally seeded from: [grunt-aws-apigateway](https://github.com/spreaker/grunt-aws-apigateway)
 
 ## Getting Started
 This plugin requires Grunt.
@@ -34,7 +34,26 @@ grunt.initConfig({
       region: 'your-aws-region', // Default: us-east-1
     },
     your_target: {
-      // Target-specific file lists and/or options go here.
+      // Include the update block if you want to update an existing API
+      // A new API will be created if no update block is provided.
+      update: {
+        restApiId: 'id-of-api-to-update'
+        mode: 'overwrite', // May be either merge or overwrite.
+      },
+      // Include the deployment block if you want to deploy the API to a stage.
+      // See http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/APIGateway.html#createDeployment-property
+      // for more info on these params.
+      deployment: {
+        stageName: 'test',
+        cacheClusterEnabled: true,
+        cacheClusterSize: '0.5',
+        description: 'My deployment ' + Date.now(),
+        stageDescription: 'My stage',
+        variables: {
+          someStageVariable: 'some-stage-variable',
+        }
+      },
+      swagger_config: 'path/to/your/swagger-file.json',
     },
   },
 })
@@ -42,50 +61,22 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.accessKeyId
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+AWS Access Key Id with which to import the API
 
-#### options.punctuation
+#### options.secretAccessKey
 Type: `String`
-Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+AWS Secret Access Key Id with which to import the API
+
+#### options.region
+Type: `String`
+
+AWS region in which to import the API
 
 ### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  import_swagger: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  import_swagger: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
