@@ -34,13 +34,18 @@ grunt.initConfig({
       region: 'your-aws-region', // Default: us-east-1
     },
     your_target: {
-      // Include the update block if you want to update an existing API
+      // REQUIRED: Can either be a (string) path to swagger json file, or object.
+      // swagger_config: {/* ... config as object ... */}
+      swagger_config: 'path/to/your/swagger-file.json',
+
+      // OPTIONAL: Include the update block if you want to update an existing API
       // A new API will be created if no update block is provided.
       update: {
         restApiId: 'id-of-api-to-update'
         mode: 'overwrite', // May be either merge or overwrite.
       },
-      // Include the deployment block if you want to deploy the API to a stage.
+
+      // OPTIONAL: Include the deployment block if you want to deploy the API to a stage.
       // See http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/APIGateway.html#createDeployment-property
       // for more info on these params.
       deployment: {
@@ -53,7 +58,6 @@ grunt.initConfig({
           someStageVariable: 'some-stage-variable',
         }
       },
-      swagger_config: 'path/to/your/swagger-file.json',
     },
   },
 })
@@ -82,7 +86,12 @@ AWS region in which to import the API
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+### 1.0.0
+
+Initial release.
+ - Handles import via file or inline.
+ - Ability to either create new or update existing api.
+ - Ability to deploy to a stage.
 
 ## License
 Copyright (c) 2016 Simple Merchant. Licensed under the MIT license.

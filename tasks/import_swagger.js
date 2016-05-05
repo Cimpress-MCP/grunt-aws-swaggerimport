@@ -39,7 +39,7 @@ module.exports = function (grunt) {
           .done();
       } else if (swaggerType === '[object Object]') {
         grunt.log.writeln('Loading inline');
-        callback();
+        callback(null, JSON.stringify(swaggerConfig));
       } else {
         callback(new Error(
           'Invalid swagger_config. Use a filename string or a config object'

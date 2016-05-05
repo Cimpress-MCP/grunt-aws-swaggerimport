@@ -55,7 +55,7 @@ module.exports = function (grunt) {
             lambdaStage: 'some-test-stage',
           }
         },
-        swagger_config: 'apis/test-api.json'
+        swagger_config: './apis/test-api.json',
       }
     },
 
