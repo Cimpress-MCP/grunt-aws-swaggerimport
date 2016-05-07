@@ -38,29 +38,25 @@ grunt.initConfig({
     options: {
       accessKeyId: 'your-aws-access-key-id',
       secretAccessKey: 'your-aws-secret-access-key',
-      region: 'your-aws-region', // Default: us-east-1
+      region: 'your-aws-region',
+      assumeRole: {}, // OPTIONAL
     },
     your_target: {
-      // REQUIRED: Can either be a (string) path to swagger json file, or object.
-      // swagger_config: {/* ... config as object ... */}
+      // REQUIRED: Either String or Object.
       swagger_config: 'path/to/your/swagger-file.json',
 
-      // OPTIONAL: Include the update block if you want to update an existing API
-      // A new API will be created if no update block is provided.
+      // OPTIONAL
       update: {
         restApiId: 'id-of-api-to-update'
         mode: 'overwrite', // May be either merge or overwrite.
       },
 
-      // OPTIONAL: Include the deployment block if you want to deploy the API to a stage.
-      // See http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/APIGateway.html#createDeployment-property
-      // for more info on these params.
+      // OPTIONAL
       deployment: {
-        stageName: 'test',
-        cacheClusterEnabled: true,
-        cacheClusterSize: '0.5',
+        stageName: 'my-stage',
+        cacheClusterEnabled: false,
         description: 'My deployment ' + Date.now(),
-        stageDescription: 'My stage',
+        stageDescription: 'My stage description',
         variables: {
           someStageVariable: 'some-stage-variable',
         }
@@ -87,10 +83,68 @@ Type: `String`
 
 AWS region in which to import the API
 
+#### options.assumeRole
+Type: `String`
+
+Optional. Hash of params to deploy the API by assuming a role.
+See [the AWS assumeRole docs](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/STS.html#assumeRole-property) for
+info on the parameters to provide here.
+
+```
+var params = {
+  RoleArn: 'STRING_VALUE', /* required */
+  RoleSessionName: 'STRING_VALUE', /* required */
+  DurationSeconds: 0,
+  ExternalId: 'STRING_VALUE',
+  Policy: 'STRING_VALUE',
+  SerialNumber: 'STRING_VALUE',
+  TokenCode: 'STRING_VALUE'
+};
+```
+
+### Target parameters
+
+#### target.swagger_config
+Type: `String` OR `Object`
+
+Required. Can either be a (string) path to swagger json file, or inline object.
+Using an inline object means it can be dynamically constructed.
+`// swagger_config: {/* ... config as object ... */}`
+
+#### target.update
+Type: `Object`
+
+Optional. Include the update block if you want to update an existing API
+A new API will be created if no update block is provided.
+
+#### target.deployment
+Type: `Object`
+
+Optional. Include the deployment block if you want to deploy the API to a stage.
+See [the AWS createDeployment docs](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/APIGateway.html#createDeployment-property) for info on these parameters (note: `restApiId` is taken from the swagger import result and cannot be specified in these deployment params).
+
+```
+{
+  stageName: 'STRING_VALUE', /* required */
+  cacheClusterEnabled: true || false,
+  cacheClusterSize: '0.5 | 1.6 | 6.1 | 13.5 | 28.4 | 58.2 | 118 | 237',
+  description: 'STRING_VALUE',
+  stageDescription: 'STRING_VALUE',
+  variables: {
+    someKey: 'STRING_VALUE',
+    /* anotherKey: ... */
+  }
+}
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+### 1.1.0
+
+Added the ability to provide an AWS IAM role to assume, with which to deploy the API.
 
 ### 1.0.1
 
