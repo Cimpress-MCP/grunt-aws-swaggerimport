@@ -1,6 +1,6 @@
 {
   "name": "grunt-aws-swaggerimport",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Grunt plugin to configure AWS API Gateway via a Swagger config",
   "homepage": "https://github.com/simplemerchant/grunt-aws-swaggerimport#readme",
   "repository": "git+https://github.com/simplemerchant/grunt-aws-swaggerimport.git",

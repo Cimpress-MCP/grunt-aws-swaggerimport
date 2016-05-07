@@ -14,13 +14,15 @@ var Promise = require('bluebird');
 var util = require('util');
 
 var LATEST_API_GATEWAY_API = '2015-07-09';
+var LATEST_STS_API = '2011-06-15';
+
 var IMPORT_TASK_NAME = 'import_swagger';
 
 var fs = Promise.promisifyAll(require('fs'));
 
 module.exports = function (grunt) {
 
-  var apigateway = Promise.promisifyAll(new AWS.APIGateway());
+  var apigateway;
 
   function _importParam(name, target) {
     return IMPORT_TASK_NAME + '.' + target + '.' + name;
@@ -109,6 +111,34 @@ module.exports = function (grunt) {
         .catch(callback);
     });
 
+  var _configureClient =
+    Promise.promisify(function _configureClientFn(assumeRole, callback) {
+      var apiGatewayConfig = {
+        apiVersion: LATEST_API_GATEWAY_API
+      }
+
+      if (assumeRole) {
+        var stsClient = new AWS.STS({
+          apiVersion: LATEST_STS_API,
+        });
+        var sts = Promise.promisifyAll(stsClient);
+        return sts.assumeRoleAsync(assumeRole)
+          .then(function (response) {
+            apiGatewayConfig.credentials = {
+              accessKeyId: response.Credentials.AccessKeyId,
+              secretAccessKey: response.Credentials.SecretAccessKey,
+              sessionToken: response.Credentials.SessionToken,
+              expireTime: response.Credentials.Expiration,
+            };
+            callback(null, apiGatewayConfig);
+          })
+          .catch(callback)
+          .done();
+      } else {
+        callback(null, apiGatewayConfig);
+      };
+    });
+
   grunt.registerMultiTask(
     IMPORT_TASK_NAME,
     'Grunt plugin to configure AWS API Gateway via a Swagger config',
@@ -132,6 +162,7 @@ module.exports = function (grunt) {
         accessKeyId: null,
         secretAccessKey: null,
         credentialsJSON: null,
+        assumeRole: null,
         region: 'us-east-1'
       });
 
@@ -154,14 +185,18 @@ module.exports = function (grunt) {
       AWS.config.update({
         region: options.region
       });
-      AWS.config.apiVersions = {
-        apigateway: LATEST_API_GATEWAY_API,
-      };
 
       // Deploy
       var done = this.async();
 
-      return _loadSwaggerData(swaggerConfig)
+      _configureClient(options.assumeRole)
+        .then(function (apiGatewayConfig) {
+          apigateway = Promise.promisifyAll(
+            new AWS.APIGateway(apiGatewayConfig)
+          );
+          return swaggerConfig;
+        })
+        .then(_loadSwaggerData)
         .then(function (swaggerData) {
           return [swaggerData, updateConfig];
         })
