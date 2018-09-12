@@ -7,6 +7,11 @@
     "name": "TrdelnikSquad",
     "email": "TrdelnikSquad@cimpress.com"
   },
+  "files": [
+    "tasks",
+    "LICENSE",
+    "README.md"
+  ],
   "keywords": [
     "gruntplugin",
     "swagger",

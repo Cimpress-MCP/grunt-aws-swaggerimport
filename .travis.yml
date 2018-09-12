@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '8'
+dist: trusty
+sudo: false
+install:
+- npm install
+deploy:
+  provider: npm
+  email: TrdelnikSquad@cimpress.com
+  skip_cleanup: true
+  api_key:
+    secure: YD5grb45J8G1ICtbIPAZm5U1NpH9hyOWdeDSBMIAjij/s6BZ1D/15dx6KLXJNn35zGTKXJN1iP7yYWuR1IhGoQO37bvHB2kmLMsOL/o6zRkJkl7Freh+vlfbp+r/CDzwMxtwLSmoHUBc+4NQCSNyqjZG5CuF91e3blTg4zHpVix/vPfq8itFDPeHNShnklZZfAyf/Lo/i25ZEC0bgvWM7OMRZ3qnn6BMKNatzqGMywX/zFONZ5R/rp6QcDB1Ogjz/q7DNYUUsC/tw1jmamExzw2Ux0VjvXBW232PJ/uDhiMBYQqycqRHpqQPYFwhKet1pAay1J1qF+W61hTD12O3quC9YhGthjRfvfSMeg5AXumUQotco5AB30ILZSGWr2DW/WpxvE3hS1OpZtDMFiJjXcFLaPoqLInSPTbSogLWNKAGWD+0CPrCLLkHADzf2KcrURaN8cezOh/nztTRT0uw26dOMvhlMGh+ZMGTghmUNG16NHGhUMwl6fzSswfH3kkUA4BkCtWGn7YJRh0RTPHx1a1TMaGGSEmxpC5z+axge4jmGIX/MpSFgtAkVVz4mkoicSYdV5ZeJ/jtyBn8xl8dNXzPnzC8mFai4Rv3ykS41K3SM5oOwM297Zgu8qZNSOiMIZipsWfdyi1JYcgLrk1Y4FflLrou0hYaDWY8I4jrAiE=
+  on:
+    branch: master
