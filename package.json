@@ -1,13 +1,11 @@
 {
-  "name": "grunt-aws-swaggerimport",
-  "version": "1.1.0",
+  "name": "cimpress-grunt-aws-swaggerimport",
+  "version": "0.1.0",
   "description": "Grunt plugin to configure AWS API Gateway via a Swagger config",
-  "homepage": "https://github.com/simplemerchant/grunt-aws-swaggerimport#readme",
-  "repository": "git+https://github.com/simplemerchant/grunt-aws-swaggerimport.git",
+  "repository": "git+https://github.com/Cimpress-MCP/grunt-aws-swaggerimport.git",
   "author": {
-    "name": "Simple Merchant",
-    "email": "opensource@simple-merchant.com",
-    "url": "http://www.simple-merchant.com"
+    "name": "TrdelnikSquad",
+    "email": "TrdelnikSquad@cimpress.com"
   },
   "keywords": [
     "gruntplugin",
@@ -24,18 +22,19 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "dotenv": "^2.0.0",
+    "dotenv": "^6.0.0",
     "grunt": "^1.0.1 ",
-    "grunt-contrib-clean": "~1.0.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-nodeunit": "~1.0.0",
-    "jshint-stylish": "~0.1.5",
-    "load-grunt-tasks": "~3.5.0"
+    "grunt-contrib-clean": "~2.0.0",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-nodeunit": "~2.0.0",
+    "jshint-stylish": "~2.2.1",
+    "load-grunt-tasks": "~4.0.0"
   },
   "dependencies": {
     "async": "^2.0.0-rc.3",
     "aws-sdk": "^2.3.6",
     "bluebird": "^3.3.5",
-    "lodash": "^4.11.1"
+    "lodash": "^4.11.1",
+    "travis": "^0.1.1"
   }
 }

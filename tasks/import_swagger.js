@@ -9,8 +9,9 @@
 'use strict';
 
 var AWS = require('aws-sdk');
+var bluebird = require('bluebird');
+AWS.config.setPromisesDependency(bluebird);
 var _ = require('lodash');
-var Promise = require('bluebird');
 var util = require('util');
 
 var LATEST_API_GATEWAY_API = '2015-07-09';
@@ -18,7 +19,7 @@ var LATEST_STS_API = '2011-06-15';
 
 var IMPORT_TASK_NAME = 'import_swagger';
 
-var fs = Promise.promisifyAll(require('fs'));
+var fs = bluebird.promisifyAll(require('fs'));
 
 module.exports = function (grunt) {
 
@@ -29,7 +30,7 @@ module.exports = function (grunt) {
   }
 
   var _loadSwaggerData =
-    Promise.promisify(function _loadSwaggerDataFn(swaggerConfig, callback) {
+    bluebird.promisify(function _loadSwaggerDataFn(swaggerConfig, callback) {
       var swaggerType = Object.prototype.toString.call(swaggerConfig);
       if (swaggerType === '[object String]') {
         grunt.log.writeln('Loading Swagger from file: ' + swaggerConfig);
@@ -50,7 +51,7 @@ module.exports = function (grunt) {
     });
 
   var _importApi =
-    Promise.promisify(function _importApiFn(
+    bluebird.promisify(function _importApiFn(
       swaggerData,
       updateConfig,
       callback
@@ -79,27 +80,27 @@ module.exports = function (grunt) {
         importParams = _.extend(params, updateConfig);
         grunt.log.writeln('Updating existing API: ' + importParams.restApiId);
 
-        return apigateway.putRestApiAsync(importParams)
+        return apigateway.putRestApi(importParams).promise()
           .then(importComplete)
           .catch(callback);
       } else {
         importMethod = apigateway.importRestApi;
         grunt.log.writeln('No update params. Creating new API');
 
-        return apigateway.importRestApiAsync(importParams)
+        return apigateway.importRestApi(importParams).promise()
           .then(importComplete)
           .catch(callback);
       }
     });
 
   var _deployStage =
-    Promise.promisify(function _deployStageFn(deployConfig, callback) {
+    bluebird.promisify(function _deployStageFn(deployConfig, callback) {
       if (!deployConfig) {
         return callback();
       }
 
       grunt.log.writeln('Deploying to stage', deployConfig.stageName);
-      apigateway.createDeploymentAsync(deployConfig)
+      apigateway.createDeployment(deployConfig).promise()
         .then(function (resp) {
           grunt.log.writeln('Deployment successful');
           grunt.log.debug(util.inspect(resp, {
@@ -112,7 +113,7 @@ module.exports = function (grunt) {
     });
 
   var _configureClient =
-    Promise.promisify(function _configureClientFn(assumeRole, callback) {
+    bluebird.promisify(function _configureClientFn(assumeRole, callback) {
       var apiGatewayConfig = {
         apiVersion: LATEST_API_GATEWAY_API
       }
@@ -121,8 +122,7 @@ module.exports = function (grunt) {
         var stsClient = new AWS.STS({
           apiVersion: LATEST_STS_API,
         });
-        var sts = Promise.promisifyAll(stsClient);
-        return sts.assumeRoleAsync(assumeRole)
+        return sts.assumeRole(assumeRole).promise()
           .then(function (response) {
             apiGatewayConfig.credentials = {
               accessKeyId: response.Credentials.AccessKeyId,
@@ -191,9 +191,7 @@ module.exports = function (grunt) {
 
       _configureClient(options.assumeRole)
         .then(function (apiGatewayConfig) {
-          apigateway = Promise.promisifyAll(
-            new AWS.APIGateway(apiGatewayConfig)
-          );
+          apigateway = new AWS.APIGateway(apiGatewayConfig);
           return swaggerConfig;
         })
         .then(_loadSwaggerData)
